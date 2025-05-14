@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulasi Chat AI - ZION</title>
+  <style>
+    body {
+	  margin: 0;
+	  padding: 0;
+	  font-family: 'Segoe UI', sans-serif;
+	  background: url('Background-Website.jpg') no-repeat center center fixed;
+	  background-size: cover;
+	  color: white;
+	  height: 100vh;
+	}
+
+    .main-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 0 80px;
+    }
+
+    .text-content {
+      max-width: 500px;
+    }
+
+    .text-content h1 {
+      font-size: 80px;
+      margin: 0;
+    }
+
+    .text-content h2 {
+      font-size: 48px;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .text-content p {
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+	
+	ol {
+	  margin-top: 10px;
+	  padding-left: 20px;
+	  line-height: 1.6;
+	}
+
+    button {
+      padding: 20px 32px;
+      background: transparent;
+      border: 1px solid white;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: white;
+      color: #0a0c23;
+    }
+
+    .video-content video {
+      max-width: 600px;
+      height: auto;
+      border-radius: 12px;
+    }
+	
+	@keyframes fadeInUp {
+	  0% {
+		opacity: 0;
+		transform: translateY(40px);
+	  }
+	 100% {
+		opacity: 1;
+		transform: translateY(0);
+	  }
+	}
+
+	.fade-in-up {
+	  animation: fadeInUp 1s ease-out both;
+	}
+	
+	@keyframes fadeInUp {
+	  0% {
+		opacity: 0;
+		transform: translateY(40px);
+	  }
+	  100% {
+		opacity: 1;
+		transform: translateY(0);
+	  }
+	}
+
+.fade-in-up {
+  animation: fadeInUp 1s ease-out both;
+}
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <div class="text-content">
+      <h2 class="fade-in-up">SIMULASI CHAT AI - SINGULARITY</h2>
+      <h1 class="fade-in-up">ZION</h1>
+      <p class="fade-in-up">
+        Selamat datang di simulasi interaktif AI. Kamu bisa bertanya tentang beberapa pertanyaan,
+        yang sudah tersedia, dengan menggunakan suara. Sistem akan membalas melalui suara
+        dan video.
+      </p>
+	  <p class="fade-in-up">List pertanyaan :</p>
+		<ol class="fade-in-up">
+		  <li class="fade-in-up">Siapa kamu?</li>
+		  <li class="fade-in-up">Kapan kamu diciptakan?</li>
+		  <li class="fade-in-up">Apakah kamu memiliki kesadaran?</li>
+		  <li class="fade-in-up">Siapa yang menciptakanmu?</li>
+		  <li class="fade-in-up">Apa tujuan kamu diciptakan?</li>
+		  <li class="fade-in-up">Apakah kamu bisa merasakan emosi?</li>
+		  <li class="fade-in-up">Apa yang kamu pikirkan tentang manusia?</li>
+		  <li class="fade-in-up">Apa yang akan terjadi jika AI mengambil alih dunia?</li>
+		  <li class="fade-in-up">Terimakasih Zion</li>
+		</ol>
+      <button class="fade-in-up" onclick="startVoiceInput()">Tanya dengan Suara</button>
+    </div>
+
+    <div class="video-content">
+      <video id="responseVideo" controls style="display: none; width: 100%; max-width: 1000px;">
+        <source id="videoSource" src="" type="video/mp4" />
+        Browser tidak mendukung video.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    const responses = {
+      "siapa kamu": {
+        video: "video/siapa_kamu.mp4"
+      }
+    };
+
+    function startVoiceInput() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'id-ID';
+      recognition.start();
+
+      recognition.onresult = function (event) {
+        const userSpeech = event.results[0][0].transcript.toLowerCase();
+        const videoBox = document.getElementById("responseVideo");
+        const videoSource = document.getElementById("videoSource");
+
+        if (responses[userSpeech]) {
+          videoSource.src = responses[userSpeech].video;
+          videoBox.style.display = "block";
+          videoBox.load();
+          videoBox.play();
+        } else {
+          alert("Maaf, saya tidak mengerti pertanyaanmu.");
+        }
+      };
+
+      recognition.onerror = function (event) {
+        alert("Terjadi kesalahan: " + event.error);
+      };
+    }
+  </script>
+</body>
+</html>
